@@ -10,8 +10,8 @@ print(selenium.__version__)
 HRMS_URL = "https://hrms.stagingapps.xyz/dashboard"
 
 # Your login credentials
-EMAIL = "annuvrat.vdoit@gmail.com"
-PASSWORD = "@Annuvrat1"
+EMAIL = ""
+PASSWORD = ""
 
 # Automatically download and use the correct ChromeDriver
 options = webdriver.ChromeOptions()
@@ -28,7 +28,7 @@ try:
   
 
     # Find and fill in the password field
-    password_input = driver.find_element(By.NAME, "@Annuvrat1")  # Change as per your HRMS site
+    password_input = driver.find_element(By.NAME, "")  # Change as per your HRMS site
     password_input.send_keys(PASSWORD)
     password_input.send_keys(Keys.RETURN)  # Press Enter to log in
 
