@@ -1,0 +1,54 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+import time
+import selenium
+print(selenium.__version__)
+
+
+# Replace with actual HRMS URL
+HRMS_URL = "https://hrms.stagingapps.xyz/dashboard"
+
+# Your login credentials
+EMAIL = "annuvrat.vdoit@gmail.com"
+PASSWORD = "@Annuvrat1"
+
+# Automatically download and use the correct ChromeDriver
+options = webdriver.ChromeOptions()
+options.add_argument("--start-maximized")  # Open in full screen
+
+driver = webdriver.Chrome(options=options)  # No need to specify ChromeDriver manually
+
+try:
+    # Open HRMS webpage
+    driver.get(HRMS_URL)
+    time.sleep(3)  # Wait for page to load
+
+    # Find and fill in the username field
+  
+
+    # Find and fill in the password field
+    password_input = driver.find_element(By.NAME, "@Annuvrat1")  # Change as per your HRMS site
+    password_input.send_keys(PASSWORD)
+    password_input.send_keys(Keys.RETURN)  # Press Enter to log in
+
+    time.sleep(5)  # Wait for login to complete
+
+    # Click "Lock-In" button
+    clock_in_button = driver.find_element(By.CLASS_NAME, "bg-indigo-600")  # Change if needed
+    clock_in_button.click()
+
+    print("Successfully clocked in. Waiting for 9 hours...")
+
+    # Wait for 9 hours (9 * 60 * 60 seconds)
+    time.sleep(9 * 60 * 60)
+
+    # Click "Lock-Out" button
+    clock_out_button = driver.find_element(By.XPATH, "//button[contains(text(), 'Clock Out')]")
+    clock_out_button.click()
+
+    print("Successfully clocked out.")
+
+finally:
+    # Close the browser
+    driver.quit()
