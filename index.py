@@ -1,54 +1,62 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 import time
+import datetime
 
-# Replace with actual HRMS URL
+
 HRMS_URL = "https://hrms.stagingapps.xyz/dashboard"
-
-# Your login credentials
 EMAIL = "annuvrat.vdoit@gmail.com"
-PASSWORD = ""
+PASSWORD = "@Annuvrat1"
+1
 
-# Set up Chrome with auto-managed driver
-options = webdriver.ChromeOptions()
-options.add_argument("--start-maximized")  # Open in full screen
+today = datetime.datetime.today().weekday()
 
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
-try:
-    # Open HRMS webpage
-    driver.get(HRMS_URL)
-    time.sleep(5)  # Wait for page to load
+if today < 5:
+    def clock_in():
+        """Function to clock in and close the browser."""
+        driver = webdriver.Chrome()
+        driver.get(HRMS_URL)
+        time.sleep(10)  
 
-    # Find and fill in the email field
-    email_input = driver.find_element(By.NAME, "email")  # Update with actual name attribute
-    email_input.send_keys(EMAIL)
+        # Enter login details
+        driver.find_element(By.NAME, "email").send_keys(EMAIL)
+        driver.find_element(By.NAME, "password").send_keys(PASSWORD, Keys.RETURN)
+        time.sleep(10)  
 
-    # Find and fill in the password field
-    password_input = driver.find_element(By.NAME, "password")  # Update with actual name attribute
-    password_input.send_keys(PASSWORD)
-    password_input.send_keys(Keys.RETURN)  # Press Enter to log in
+        # Click "Clock In"
+        driver.find_element(By.CLASS_NAME, "bg-indigo-600").click()
+        print("Successfully clocked in.")
+        time.sleep(5)  
+        # Close the browser
+        driver.quit()
 
-    time.sleep(10)  # Wait for login to complete
+    def clock_out():
+        """Function to clock out after nine hours and close the browser."""
+        driver = webdriver.Chrome()
+        driver.get(HRMS_URL)
+        time.sleep(10)  # Wait for page to load
 
-    # Click "Clock-In" button
-    clock_in_button = driver.find_element(By.CLASS_NAME, "bg-indigo-600")  # Update if needed
-    clock_in_button.click()
+        # Enter login details again
+        driver.find_element(By.NAME, "email").send_keys(EMAIL)
+        driver.find_element(By.NAME, "password").send_keys(PASSWORD, Keys.RETURN)
+        time.sleep(10)  # Wait for login to complete
 
-    print("Successfully clocked in. Waiting for 9 hours...")
+        # Click "Clock Out"
+        driver.find_element(By.XPATH, "//button[contains(text(), 'Clock Out')]").click()
+        print("Successfully clocked out.")
+        time.sleep(10)  
+        # Close the browser
+        driver.quit()
 
-    # Wait for 9 hours (9 * 60 * 60 seconds)
+    # Clock in now
+    clock_in()
+
+    # Wait for nine hours (Script ends, not keeping the tab open)
     time.sleep(9 * 60 * 60)
 
-    # Click "Clock-Out" button
-    clock_out_button = driver.find_element(By.XPATH, "//button[contains(text(), 'Clock Out')]")
-    clock_out_button.click()
-
-    print("Successfully clocked out.")
-
-finally:
-    # Close the browser
-    driver.quit()
+    # Clock out after nine hours
+    clock_out()
+else:
+    print("Today is a weekend. No need to run the script.")
