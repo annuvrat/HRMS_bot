@@ -6,8 +6,8 @@ import datetime
 
 
 HRMS_URL = "https://hrms.stagingapps.xyz/dashboard"
-EMAIL = "annuvrat.vdoit@gmail.com"
-PASSWORD = "@Annuvrat1"
+EMAIL = ""
+PASSWORD = ""
 1
 
 today = datetime.datetime.today().weekday()
