@@ -8,7 +8,7 @@ import datetime
 HRMS_URL = "https://hrms.stagingapps.xyz/dashboard"
 EMAIL = ""
 PASSWORD = ""
-1
+
 
 today = datetime.datetime.today().weekday()
 
